@@ -24,8 +24,18 @@ void setup() {
   myservo.attach(9);   // attaches the servo on pin 9 to the Servo object
   Serial.begin(9600);  // debug crap
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
-SchmittTrigger<int> trigger(400, 600);
+SchmittTrigger<int> trigger1(100, 200);
+SchmittTrigger<int> trigger2(300, 400);
+SchmittTrigger<int> trigger3(500, 600);
+SchmittTrigger<int> trigger4(600, 700);
+
+
 
 
 int globalpos = 70;
@@ -55,12 +65,16 @@ void loop() {
     val = analogRead(A0);
     val = fir.updateOutput(val);
 
-    trigger.input(val);
+    trigger1.input(val);
+    trigger2.input(val);
+    trigger3.input(val);
+    trigger4.input(val);
 
-    digitalWrite(LED_BUILTIN, trigger.output());
 
-
-
+    digitalWrite(LED_BUILTIN, trigger1.output());
+    digitalWrite(LED_BUILTIN, trigger2.output());
+    digitalWrite(LED_BUILTIN, trigger3.output());
+    digitalWrite(LED_BUILTIN, trigger4.output());   
 
 
     Serial.println(val);
