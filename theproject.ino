@@ -71,10 +71,10 @@ void loop() {
     trigger4.input(val);
 
 
-    digitalWrite(LED_BUILTIN, trigger1.output());
-    digitalWrite(LED_BUILTIN, trigger2.output());
-    digitalWrite(LED_BUILTIN, trigger3.output());
-    digitalWrite(LED_BUILTIN, trigger4.output());   
+    digitalWrite(11, trigger1.output());
+    digitalWrite(10, trigger2.output());
+    digitalWrite(9, trigger3.output());
+    digitalWrite(6, trigger4.output());   
 
 
     Serial.println(val);
