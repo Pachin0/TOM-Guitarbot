@@ -78,10 +78,10 @@ void loop() {
 
     digitalWrite(11, trigger1.output());
     digitalWrite(10, trigger2.output());
-    digitalWrite(9 , trigger3.output());
-    digitalWrite(6 , trigger4.output());
-    digitalWrite(5 , trigger5.output());
-    digitalWrite(3 , trigger6.output());
+    digitalWrite(9, trigger3.output());
+    digitalWrite(6, trigger4.output());
+    digitalWrite(5, trigger5.output());
+    digitalWrite(3, trigger6.output());
 
     Serial.println(val);
     delay(150);
