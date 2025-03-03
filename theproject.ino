@@ -32,6 +32,15 @@ void setup() {
   pinMode(3, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 }
+
+bool edge(bool last, bool initial) {
+  if (initial != last) {
+    Serial.println("nigga");
+    return initial;
+  }
+  return last;
+  }
+
 SchmittTrigger<int> trigger1(100, 200);
 SchmittTrigger<int> trigger2(200, 300);
 SchmittTrigger<int> trigger3(300, 400);
@@ -62,6 +71,7 @@ void loop() {
   a.angleDiff = DEGREEDIFF;
   float val = 0;
   double output = 0;
+  bool last = 0;
 
   while (true) {
 
@@ -79,7 +89,7 @@ void loop() {
     digitalWrite(11, trigger1.output());
     digitalWrite(10, trigger2.output());
     digitalWrite(9, trigger3.output());
-    digitalWrite(6, trigger4.output());
+    last = edge(last, trigger4.output());
     digitalWrite(5, trigger5.output());
     digitalWrite(3, trigger6.output());
 
