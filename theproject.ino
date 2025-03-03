@@ -12,6 +12,7 @@ hasfhkal;f
 
 Servo myservo;  // create Servo object to control a servo
 // twelve Servo objects can be created on most boards
+FIR fir(3);
 
 struct SettingS {
   int angleDiff = 0;
@@ -50,10 +51,19 @@ void pluck(Servo servo){
 void loop() {
   struct SettingS a;
   a.angleDiff = DEGREEDIFF;
-  int val = 0;
+  float val = 0;
+  double output = 0;
   
   while (true) {
+    
     val = analogRead(A0);
+    val = fir.updateOutput(val);
+
+    
+
+
+
+
     Serial.println(val);    
     delay(200);
   }
