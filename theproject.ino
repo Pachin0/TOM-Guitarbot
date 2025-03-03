@@ -9,13 +9,19 @@ Servo myservo;  // create Servo object to control a servo
 // twelve Servo objects can be created on most boards
 FIR fir(3);
 
-struct SettingS {
-  int angleDiff = 0;
-  int totalAngle = 0;
+
+
+struct state {
+  int pin;
+  int angleDiff;
+  int totalAngle;
+  bool last;
   class Servo servo;
 };
 
-
+void handleState(struct state* mystate, bool current){
+  mystate->last = edge(mystate->last, current, mystate->pin);
+}
 
 
 int pos = 0;  // variable to store the servo position
@@ -33,13 +39,20 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
-bool edge(bool last, bool initial) {
+bool edge(bool last, bool initial, int pin) {
   if (initial != last) {
-    Serial.println("nigga");
+    Serial.print("LED PIN");
+    Serial.println(pin);
+
+    digitalWrite(pin, HIGH);
+    delay(50);
+    digitalWrite(pin, LOW);
+
     return initial;
   }
   return last;
-  }
+}
+
 
 SchmittTrigger<int> trigger1(100, 200);
 SchmittTrigger<int> trigger2(200, 300);
@@ -52,26 +65,33 @@ SchmittTrigger<int> trigger6(800, 900);
 
 int globalpos = 70;
 
-void pluck(Servo servo) {
-  if (globalpos <= 70) {
-    servo.write(200);
-    globalpos = 200;
+void pluck() {
+  
 
-  } else {
-    servo.write(70);
-    globalpos = 70;
-  }
 }
 
 
 
 
+
 void loop() {
-  struct SettingS a;
-  a.angleDiff = DEGREEDIFF;
+  struct state s1 = {0};
+  struct state s2 = {0};
+  struct state s3 = {0};
+  struct state s4 = {0};
+  struct state s5 = {0};
+  struct state s6 = {0};
+
   float val = 0;
   double output = 0;
   bool last = 0;
+
+  s1.pin = 11;
+  s2.pin = 10;
+  s3.pin = 9;
+  s4.pin = 6;
+  s5.pin = 5;
+  s6.pin = 3;
 
   while (true) {
 
@@ -86,12 +106,12 @@ void loop() {
     trigger6.input(val);
 
 
-    digitalWrite(11, trigger1.output());
-    digitalWrite(10, trigger2.output());
-    digitalWrite(9, trigger3.output());
-    last = edge(last, trigger4.output());
-    digitalWrite(5, trigger5.output());
-    digitalWrite(3, trigger6.output());
+    handleState(&s1, trigger1.output());
+    handleState(&s2, trigger2.output());
+    handleState(&s3, trigger3.output());
+    handleState(&s4, trigger4.output());
+    handleState(&s5, trigger5.output());
+    handleState(&s6, trigger6.output());
 
     Serial.println(val);
     delay(150);
