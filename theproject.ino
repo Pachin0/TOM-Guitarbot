@@ -28,13 +28,16 @@ void setup() {
   pinMode(10, OUTPUT);
   pinMode(9, OUTPUT);
   pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(3, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 }
 SchmittTrigger<int> trigger1(100, 200);
 SchmittTrigger<int> trigger2(300, 400);
 SchmittTrigger<int> trigger3(500, 600);
 SchmittTrigger<int> trigger4(600, 700);
-
+SchmittTrigger<int> trigger5(700, 800);
+SchmittTrigger<int> trigger6(900, 1000);
 
 
 
@@ -69,15 +72,18 @@ void loop() {
     trigger2.input(val);
     trigger3.input(val);
     trigger4.input(val);
+    trigger5.input(val);
+    trigger6.input(val);
 
 
     digitalWrite(11, trigger1.output());
     digitalWrite(10, trigger2.output());
-    digitalWrite(9, trigger3.output());
-    digitalWrite(6, trigger4.output());   
-
+    digitalWrite(9 , trigger3.output());
+    digitalWrite(6 , trigger4.output());
+    digitalWrite(5 , trigger5.output());
+    digitalWrite(3 , trigger6.output());
 
     Serial.println(val);
-    delay(200);
+    delay(150);
   }
 }
