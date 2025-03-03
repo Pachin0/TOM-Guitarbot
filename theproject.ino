@@ -26,6 +26,7 @@ int pos = 0;    // variable to store the servo position
 
 void setup() {
   myservo.attach(9); // attaches the servo on pin 9 to the Servo object
+  Serial.begin(9600); // debug crap
 }
 
 
@@ -49,11 +50,12 @@ void pluck(Servo servo){
 void loop() {
   struct SettingS a;
   a.angleDiff = DEGREEDIFF;
+  int val = 0;
   
-  while true {
-    
-
-
+  while (true) {
+    val = analogRead(A0);
+    Serial.println(val);    
+    delay(200);
   }
 
  
