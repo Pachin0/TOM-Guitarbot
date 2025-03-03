@@ -1,14 +1,9 @@
-/* Sweep
- by BARRAGAN <http://barraganstudio.com>
- This example code is in the public domain.
- modified 8 Nov 2013
- by Scott Fitzgerald
- https://www.arduino.cc/en/Tutorial/LibraryExamples/Sweep
-*/
-hasfhkal;f
+#include <FIR.h>
 #define DEGREEDIFF 20;
-
+#include <SchmittTrigger.h>
 #include <Servo.h>
+
+
 
 Servo myservo;  // create Servo object to control a servo
 // twelve Servo objects can be created on most boards
@@ -23,18 +18,19 @@ struct SettingS {
 
 
 
-int pos = 0;    // variable to store the servo position
+int pos = 0;  // variable to store the servo position
 
 void setup() {
-  myservo.attach(9); // attaches the servo on pin 9 to the Servo object
-  Serial.begin(9600); // debug crap
+  myservo.attach(9);   // attaches the servo on pin 9 to the Servo object
+  Serial.begin(9600);  // debug crap
+  pinMode(LED_BUILTIN, OUTPUT);
 }
-
+SchmittTrigger<int> trigger(400, 600);
 
 
 int globalpos = 70;
 
-void pluck(Servo servo){
+void pluck(Servo servo) {
   if (globalpos <= 70) {
     servo.write(200);
     globalpos = 200;
@@ -53,20 +49,21 @@ void loop() {
   a.angleDiff = DEGREEDIFF;
   float val = 0;
   double output = 0;
-  
+
   while (true) {
-    
+
     val = analogRead(A0);
     val = fir.updateOutput(val);
 
-    
+    trigger.input(val);
+
+    digitalWrite(LED_BUILTIN, trigger.output());
 
 
 
 
-    Serial.println(val);    
+
+    Serial.println(val);
     delay(200);
   }
-
- 
 }
