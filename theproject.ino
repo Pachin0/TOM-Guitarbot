@@ -33,11 +33,11 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
 SchmittTrigger<int> trigger1(100, 200);
-SchmittTrigger<int> trigger2(300, 400);
-SchmittTrigger<int> trigger3(500, 600);
-SchmittTrigger<int> trigger4(600, 700);
-SchmittTrigger<int> trigger5(700, 800);
-SchmittTrigger<int> trigger6(900, 1000);
+SchmittTrigger<int> trigger2(200, 300);
+SchmittTrigger<int> trigger3(300, 400);
+SchmittTrigger<int> trigger4(500, 600);
+SchmittTrigger<int> trigger5(600, 700);
+SchmittTrigger<int> trigger6(800, 900);
 
 
 
