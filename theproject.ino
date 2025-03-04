@@ -38,21 +38,16 @@ void setup() {
 }
 
 void servoAngle (struct state* info) {
-  info->pos1
-  info->pos2
-  
-
+  int initial1 = info->pos1;
+  int initial2 = info->pos2;
+  info->pos1 = initial2;
+  info->pos2 = initial1;
+  info->servo.write(initial2);
 }
 
 bool edge(bool last, bool initial, struct state* info) {
   if (initial != last) {
     if (digitalRead(4)) {
-        Serial.print("LED PIN");
-        Serial.println(pin);
-
-        digitalWrite(pin, HIGH);
-        delay(50);
-        digitalWrite(pin, LOW);
     }
 
     return initial;
