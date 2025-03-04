@@ -3,23 +3,20 @@
 #include <SchmittTrigger.h>
 #include <Servo.h>
 
-
-
 Servo myservo;  // create Servo object to control a servo
 // twelve Servo objects can be created on most boards
 FIR fir(3);
 
-
-
 struct state {
   int pin;
-  int angleDiff;
+  int pos1;
+  int pos2;
   int totalAngle;
   bool last;
   class Servo servo;
 };
 
-void handleState(struct state* mystate, bool current){
+void handleState(struct state* mystate, bool current) {
   mystate->last = edge(mystate->last, current, mystate->pin);
 }
 
@@ -35,18 +32,28 @@ void setup() {
   pinMode(9, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(5, OUTPUT);
+  pinMode(4, INPUT);
   pinMode(3, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
-bool edge(bool last, bool initial, int pin) {
-  if (initial != last) {
-    Serial.print("LED PIN");
-    Serial.println(pin);
+void servoAngle (struct state* info) {
+  info->pos1
+  info->pos2
+  
 
-    digitalWrite(pin, HIGH);
-    delay(50);
-    digitalWrite(pin, LOW);
+}
+
+bool edge(bool last, bool initial, struct state* info) {
+  if (initial != last) {
+    if (digitalRead(4)) {
+        Serial.print("LED PIN");
+        Serial.println(pin);
+
+        digitalWrite(pin, HIGH);
+        delay(50);
+        digitalWrite(pin, LOW);
+    }
 
     return initial;
   }
@@ -66,21 +73,15 @@ SchmittTrigger<int> trigger6(800, 900);
 int globalpos = 70;
 
 void pluck() {
-  
-
 }
 
-
-
-
-
 void loop() {
-  struct state s1 = {0};
-  struct state s2 = {0};
-  struct state s3 = {0};
-  struct state s4 = {0};
-  struct state s5 = {0};
-  struct state s6 = {0};
+  struct state s1 = { 0 };
+  struct state s2 = { 0 };
+  struct state s3 = { 0 };
+  struct state s4 = { 0 };
+  struct state s5 = { 0 };
+  struct state s6 = { 0 };
 
   float val = 0;
   double output = 0;
@@ -114,6 +115,6 @@ void loop() {
     handleState(&s6, trigger6.output());
 
     Serial.println(val);
-    delay(150);
+    delay(10);
   }
 }
