@@ -20,7 +20,7 @@ struct state {
 
 
 void handleState(struct state* mystate, bool current) {
-  mystate->last = edge(mystate->last, current, mystate->pin);
+  mystate->last = edge(mystate->last, current, mystate);
 }
 
 
@@ -53,7 +53,6 @@ bool edge(bool last, bool initial, struct state* info) {
       servoAngle(info);
       info->thething.write(info->pos1);
     }
-
     return initial;
   }
   return last;
