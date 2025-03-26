@@ -1,5 +1,7 @@
 #include <FIR.h>
 #define DEGREEDIFF 20;
+#define DEGREE1 70
+#define DEGREE2 100
 #include <SchmittTrigger.h>
 #include <Servo.h>
 
@@ -13,8 +15,9 @@ struct state {
   int pos2;
   int totalAngle;
   bool last;
-  class Servo servo;
+  class Servo thething;
 };
+
 
 void handleState(struct state* mystate, bool current) {
   mystate->last = edge(mystate->last, current, mystate->pin);
@@ -42,12 +45,13 @@ void servoAngle (struct state* info) {
   int initial2 = info->pos2;
   info->pos1 = initial2;
   info->pos2 = initial1;
-  info->servo.write(initial2);
 }
 
 bool edge(bool last, bool initial, struct state* info) {
   if (initial != last) {
     if (digitalRead(4)) {
+      servoAngle(info);
+      info->thething.write(info->pos1);
     }
 
     return initial;
@@ -70,6 +74,8 @@ int globalpos = 70;
 void pluck() {
 }
 
+
+
 void loop() {
   struct state s1 = { 0 };
   struct state s2 = { 0 };
@@ -82,12 +88,30 @@ void loop() {
   double output = 0;
   bool last = 0;
 
-  s1.pin = 11;
-  s2.pin = 10;
-  s3.pin = 9;
-  s4.pin = 6;
-  s5.pin = 5;
-  s6.pin = 3;
+  //s1.pin = 11;
+  s1.thething.attach(11);
+  s1.pos1 = DEGREE1;
+  s1.pos2 = DEGREE2;
+  //s2.pin = 10;
+  s2.thething.attach(10);
+  s2.pos1 = DEGREE1;
+  s2.pos2 = DEGREE2;
+  //s3.pin = 9;
+  s3.thething.attach(9);
+  s3.pos1 = DEGREE1;
+  s3.pos2 = DEGREE2;
+  //s4.pin = 6;
+  s4.thething.attach(6);
+  s4.pos1 = DEGREE1;
+  s4.pos2 = DEGREE2;
+  //s5.pin = 5;
+  s5.thething.attach(5);
+  s5.pos1 = DEGREE1;
+  s5.pos2 = DEGREE2;
+  //s6.pin = 3;
+  s6.thething.attach(3);
+  s6.pos1 = DEGREE1;
+  s6.pos2 = DEGREE2;
 
   while (true) {
 
