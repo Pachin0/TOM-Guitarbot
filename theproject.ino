@@ -48,9 +48,10 @@ void servoAngle (struct state* info) {
 }
 
 bool edge(bool last, bool initial, struct state* info) {
+  //Serial.println(digitalRead(12));
   if (initial != last) {
-    if (digitalRead(4)) {
-      servoAngle(info);
+    if (digitalRead(12)) {
+      servoAngle(info);      
       info->thething.write(info->pos1);
     }
     return initial;
@@ -131,8 +132,6 @@ void loop() {
     handleState(&s4, trigger4.output());
     handleState(&s5, trigger5.output());
     handleState(&s6, trigger6.output());
-
-    Serial.println(val);
     delay(10);
   }
 }
