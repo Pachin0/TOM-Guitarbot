@@ -89,49 +89,53 @@ void loop() {
   bool last = 0;
 
   //s1.pin = 11;
-  s1.thething.attach(11);
-  s1.pos1 = DEGREE1;
-  s1.pos2 = DEGREE2;
+  s1.thething.attach(11); //A
+  s1.pos1 = 60;
+  s1.pos2 = 90;
   //s2.pin = 10;
-  s2.thething.attach(10);
-  s2.pos1 = DEGREE1;
-  s2.pos2 = DEGREE2;
+  s2.thething.attach(10); //G
+  s2.pos1 = 65;
+  s2.pos2 = 95;
   //s3.pin = 9;
-  s3.thething.attach(9);
-  s3.pos1 = DEGREE1;
-  s3.pos2 = DEGREE2;
+  s3.thething.attach(9); //HIGH E
+  s3.pos1 = 70;
+  s3.pos2 = 100;
   //s4.pin = 6;
-  s4.thething.attach(6);
-  s4.pos1 = DEGREE1;
-  s4.pos2 = DEGREE2;
+  s4.thething.attach(6); //B
+  s4.pos1 = 70;
+  s4.pos2 = 110;
   //s5.pin = 5;
-  s5.thething.attach(5);
-  s5.pos1 = DEGREE1;
-  s5.pos2 = DEGREE2;
+  s5.thething.attach(5); //D
+  s5.pos1 = 70;
+  s5.pos2 = 100;
   //s6.pin = 3;
-  s6.thething.attach(3);
-  s6.pos1 = DEGREE1;
-  s6.pos2 = DEGREE2;
+  s6.thething.attach(3); //LOW E
+  s6.pos1 = 70;
+  s6.pos2 = 92;
 
   while (true) {
 
     val = analogRead(A0);
     val = fir.updateOutput(val);
 
+    //val = (val - 300) * 1.999;
+
+    Serial.println(val);
     trigger1.input(val);
     trigger2.input(val);
     trigger3.input(val);
     trigger4.input(val);
     trigger5.input(val);
     trigger6.input(val);
+    Serial.println(val);
 
 
-    handleState(&s1, trigger1.output());
-    handleState(&s2, trigger2.output());
-    handleState(&s3, trigger3.output());
-    handleState(&s4, trigger4.output());
-    handleState(&s5, trigger5.output());
-    handleState(&s6, trigger6.output());
+    handleState(&s6, trigger1.output());
+    handleState(&s1, trigger2.output());
+    handleState(&s5, trigger3.output());
+    handleState(&s2, trigger4.output());
+    handleState(&s4, trigger5.output());
+    handleState(&s3, trigger6.output());
     delay(10);
   }
 }
